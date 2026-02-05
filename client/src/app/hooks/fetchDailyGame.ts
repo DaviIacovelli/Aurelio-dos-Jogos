@@ -1,9 +1,9 @@
 export const fetchDailyGame = async () => {
   try {
-    const response = await fetch("https://ap-idos-jogos.vercel.app/api/games", {
+    const response = await fetch("localhost:3001/api/games", {
       headers: {
         "Content-Type": "application/json",
-        authorization: "" + process.env.JWT_SECRET,
+        authorization: "" + process.env.TOKEN,
       },
     });
     const data = await response.json();

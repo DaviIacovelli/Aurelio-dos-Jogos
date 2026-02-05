@@ -59,4 +59,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: "Erro interno do servidor" });
 });
 
+app.listen(process.env.PORT, () =>
+  console.log(`API rodando na porta ${process.env.PORT}`),
+);
+
 export default app;
