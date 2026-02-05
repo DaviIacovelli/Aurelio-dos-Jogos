@@ -20,7 +20,6 @@ const serviceAccount = {
   auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
   client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT_URL,
 };
-require("../../serviceAccountKey.json");
 
 // Inicializa o Firebase Admin apenas se ainda não foi inicializado
 if (!admin.apps.length) {
