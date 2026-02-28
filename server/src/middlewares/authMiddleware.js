@@ -1,11 +1,9 @@
 import dotenv from "dotenv";
 import admin from "firebase-admin";
-import { createRequire } from "module";
 
 dotenv.config();
 
-// Carregando o JSON de credenciais (maneira compatível com ES Modules)
-const require = createRequire(import.meta.url);
+// Configuração das credenciais do Firebase Admin
 const serviceAccount = {
   type: "service_account",
   project_id: process.env.FIREBASE_PROJECT_ID,
@@ -28,30 +26,32 @@ if (!admin.apps.length) {
   });
 }
 
-export const verifyFirebaseToken = async (req, res, next) => {
-  const authHeader = req.headers.authorization;
+/**
+ * Middleware para validar o App Check Token
+ * Substitui a validação de ID Token de usuário para permitir acesso deslogado.
+ */
+export const verifyAppCheckToken = async (req, res, next) => {
+  // Captura o token enviado pelo front-end no header customizado
+  const appCheckToken = req.header("X-Firebase-AppCheck");
 
-  // 1. Verifica se o header existe e começa com "Bearer "
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!appCheckToken) {
     return res.status(401).json({
       success: false,
-      message: "Token não fornecido ou formato inválido.",
+      message: "Acesso negado: App Check token não fornecido.",
     });
   }
 
-  const token = authHeader.split(" ")[1];
-
   try {
-    const decodedToken = await admin.auth().verifyIdToken(token);
+    // Verifica se o token de atestação do app é válido
+    await admin.appCheck().verifyToken(appCheckToken);
 
-    req.user = decodedToken;
-
+    // Se for válido, o Express segue para a rota principal
     next();
   } catch (error) {
-    console.error("Erro na validação do token Firebase:", error);
+    console.error("Erro na validação do App Check:", error);
     return res.status(403).json({
       success: false,
-      message: "Token inválido ou expirado.",
+      message: "Acesso negado: Origem não autorizada ou token inválido.",
     });
   }
 };

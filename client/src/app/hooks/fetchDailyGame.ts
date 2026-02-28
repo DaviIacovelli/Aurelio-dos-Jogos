@@ -1,11 +1,27 @@
+import { appCheck } from "@/services/firebaseAPI";
+import { getToken } from "firebase/app-check";
 export const fetchDailyGame = async () => {
+  let appCheckToken = "";
+
+  if (appCheck) {
+    try {
+      const result = await getToken(appCheck);
+      appCheckToken = result.token;
+    } catch (error) {
+      console.error("Erro ao obter o token do App Check:", error);
+    }
+  }
+
   try {
-    const response = await fetch("localhost:3001/api/games", {
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "" + process.env.TOKEN,
+    const response = await fetch(
+      "https://aurelio-dos-jogos.onrender.com/api/games",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${appCheckToken}`,
+        },
       },
-    });
+    );
     const data = await response.json();
 
     const today = new Date().toDateString();
