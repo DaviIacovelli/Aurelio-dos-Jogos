@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: [process.env.LOCALHOST, process.env.NETWORK],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Firebase-AppCheck"],
   }),
 );
 

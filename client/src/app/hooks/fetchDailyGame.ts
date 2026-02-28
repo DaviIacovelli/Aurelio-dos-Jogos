@@ -18,7 +18,7 @@ export const fetchDailyGame = async () => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${appCheckToken}`,
+          "X-Firebase-AppCheck": `Bearer ${appCheckToken}`,
         },
       },
     );
