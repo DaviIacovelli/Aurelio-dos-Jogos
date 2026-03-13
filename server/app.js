@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
 // --- Rotas Protegidas ---
 // Todas as rotas dentro de gameRoutes passarão pelo verifyAppCheckToken
 // OU você pode aplicar individualmente dentro do arquivo de rotas
-app.use("/api/games", verifyAppCheckToken, gameRoutes);
+app.use("/api/games", /*verifyAppCheckToken,*/ gameRoutes);
 
 // Rota de Perfil (Opcional: agora pega dados do token do Firebase)
 app.get("/api/profile", verifyAppCheckToken, (req, res) => {
