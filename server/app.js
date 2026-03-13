@@ -1,12 +1,15 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import seed from "./seed.js";
 import { initDb } from "./src/database/db.js";
 import { verifyAppCheckToken } from "./src/middlewares/authMiddleware.js";
 
 import gameRoutes from "./src/routes/gameRoutes.js";
 
 dotenv.config();
+
+seed();
 
 const app = express();
 
