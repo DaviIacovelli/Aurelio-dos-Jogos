@@ -4,7 +4,7 @@ import { verifyAppCheckToken } from "../middlewares/authMiddleware.js";
 
 const router = Router();
 
-router.get("/", getAllGames);
+router.get("/api/games", getAllGames);
 router.post("/", verifyAppCheckToken, createGame);
 
 export default router;
