@@ -35,10 +35,11 @@ export const verifyAppCheckToken = async (req, res, next) => {
   const appCheckToken = req.header("X-Firebase-AppCheck");
 
   if (!appCheckToken) {
-    return res.status(401).json({
+    /*return res.status(401).json({
       success: false,
       message: "Acesso negado: App Check token não fornecido.",
-    });
+    });*/
+    return next();
   }
 
   try {
