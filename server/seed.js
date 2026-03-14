@@ -1188,20 +1188,33 @@ const jogos = [
   },
 ];
 
-const seed = async () => {
+export const seed = async () => {
   const db = await openDb();
 
-  // Cria tabela se não existir (caso rode o seed antes do app)
-  await db.exec(`CREATE TABLE IF NOT EXISTS games ...`);
+  // 1. Garanta que a tabela existe com a sintaxe correta
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS games (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      titulo TEXT NOT NULL,
+      description TEXT,
+      image_url TEXT,
+      release_date TEXT
+    )
+  `);
+
+  // 2. Opcional: Limpar a tabela antes de inserir para não duplicar IDs se rodar 2x
+  await db.run("DELETE FROM games");
 
   for (const jogo of jogos) {
-    await db.run(
-      `INSERT INTO games (titulo, description, image_url, release_date) VALUES (?, ?, ?, ?)`,
-      [jogo.titulo, jogo.description, jogo["imageUrl"], jogo.release],
-    );
-    console.log(`Inserido: ${jogo.titulo}`);
+    try {
+      await db.run(
+        `INSERT INTO games (titulo, description, image_url, release_date) VALUES (?, ?, ?, ?)`,
+        [jogo.titulo, jogo.description, jogo.imageUrl, jogo.release],
+      );
+      console.log(`✅ Inserido: ${jogo.titulo}`);
+    } catch (err) {
+      console.error(`❌ Erro ao inserir ${jogo.titulo}:`, err.message);
+    }
   }
-  console.log("Migração concluída!");
+  console.log("--- Migração concluída! ---");
 };
-
-seed();

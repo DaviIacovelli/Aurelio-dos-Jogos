@@ -1,15 +1,13 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import seed from "./seed.js";
+import { seed } from "./seed.js";
 import { initDb } from "./src/database/db.js";
 import { verifyAppCheckToken } from "./src/middlewares/authMiddleware.js";
 
 import gameRoutes from "./src/routes/gameRoutes.js";
 
 dotenv.config();
-
-seed();
 
 const app = express();
 
@@ -31,7 +29,7 @@ app.use((req, res, next) => {
 
 // --- Inicialização do Banco ---
 initDb();
-
+seed();
 // --- Log de Requisições ---
 app.use("/api", (req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
