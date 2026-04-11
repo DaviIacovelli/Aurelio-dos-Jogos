@@ -27,6 +27,7 @@ firestore-debug.log*
 ui-debug.log*
 # A chave de serviço do Backend (MUITO IMPORTANTE)
 server/serviceAccountKey.json
+server-old/serviceAccountKey.json
 
 # --- BACKEND / DATABASE ---
 # Ignora qualquer arquivo de banco de dados SQLite

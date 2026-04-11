@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "cd client && npm run dev",
-    "server": "cd server && npm run dev",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "client": "cd client && pnpm dev",
+    "server": "cd server && pnpm dev",
+    "dev": "concurrently \"pnpm server\" \"pnpm client\""
   },
   "keywords": [],
   "author": "",
@@ -15,5 +15,8 @@
   "type": "commonjs",
   "devDependencies": {
     "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "@nestjs/cli": "^11.0.17"
   }
 }

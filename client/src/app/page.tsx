@@ -1,19 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Container from "./_components/container";
-import { fetchDailyGame } from "./hooks/fetchDailyGame";
+
 import { Game } from "./interfaces/Game";
 
 export default function Page() {
   const [dailyGame, setDailyGame] = useState<Game | null>(null);
 
-  useEffect(() => {
-    fetchDailyGame().then((data) => {
-      if (data) setDailyGame(data);
-    });
-  }, []);
+  setDailyGame({
+    id: 1,
+    titulo: "Super Mario Odyssey",
+    description:
+      "Super Mario Odyssey e a primeira aventura de Super Mario para a Nintendo Switch, com uma nova jornada e uma nova aventura para explorar o mundo dos games.",
+    platform: "Nintendo Switch",
+    categories: "Aventura",
+    imageUrl: "https://storage.gamehub.com/images/super_mario_odyssey.jpg",
+    release: new Date("2021-03-03"),
+  });
 
   return (
     <main className="min-h-screen bg-gray-50 py-10">
